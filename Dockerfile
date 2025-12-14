@@ -13,7 +13,7 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 
-RUN useradd -M app
+RUN useradd -m app
 
 COPY --from=deps --chown=app:app /app/.venv ./.venv
 COPY --chown=app:app pyproject.toml uv.lock main.py config.py ./
