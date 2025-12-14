@@ -11,12 +11,7 @@ RUN uv sync --frozen --no-dev
 FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS runner
 WORKDIR /app
 
-RUN useradd \
-    --uid 10001 \
-    --gid 10001 \
-    --shell /usr/sbin/nologin \
-    --no-create-home \
-    app
+RUN useradd -M app
 
 COPY --from=deps --chown=app:app /app/.venv ./.venv
 COPY --chown=app:app main.py config.py ./
