@@ -1,16 +1,25 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/astral-sh/uv:python3.13-alpine
 
+FROM ghcr.io/astral-sh/uv:python3.13-alpine AS deps
 WORKDIR /app
 
 ENV UV_PROJECT_ENVIRONMENT=/app/.venv
 
-# Copy dependency manifests first for better caching
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
-# Copy application source
-COPY . .
+FROM ghcr.io/astral-sh/uv:python3.13-alpine AS runner
+WORKDIR /app
 
-# Run the bot via uv to ensure virtualenv isolation
+RUN useradd \
+    --uid 10001 \
+    --gid 10001 \
+    --shell /usr/sbin/nologin \
+    --no-create-home \
+    app
+
+COPY --from=deps --chown=app:app /app/.venv ./.venv
+COPY --chown=app:app main.py config.py ./
+
+USER app
 CMD ["uv", "run", "python", "main.py"]
