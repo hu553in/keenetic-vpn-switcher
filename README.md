@@ -1,5 +1,7 @@
 # Keenetic VPN switcher
 
+[![CI](https://github.com/hu553in/keenetic-vpn-switcher/actions/workflows/ci.yml/badge.svg)](https://github.com/hu553in/keenetic-vpn-switcher/actions/workflows/ci.yml)
+
 Toggle the VPN policy applied to devices on a Keenetic router through a private Telegram bot.
 
 ## Environment variables
