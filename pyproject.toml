@@ -4,4 +4,33 @@ version = "0.1.0"
 description = "Toggle VPN for specified device MAC address on Keenetic router"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = ["requests>=2.32.5", "python-telegram-bot>=22.5"]
+
+dependencies = ["requests>=2.33.1", "python-telegram-bot>=22.7"]
+
+[dependency-groups]
+dev = ["prek>=0.3.8", "pysentry-rs>=0.4.1", "ruff>=0.15.9", "ty>=0.0.28"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ARG", "PL", "RUF"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = true
+
+[tool.pysentry.defaults]
+fail_on = "low"
+
+[tool.pysentry.sources]
+enabled = ["pypa", "pypi", "osv"]
+
+[tool.bandit.assert_used]
+skips = ["*_test.py", "*test_*.py"]
