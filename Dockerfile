@@ -14,6 +14,7 @@ FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS runner
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
     UV_PROJECT_ENVIRONMENT=/app/.venv
 
 RUN useradd -m app
