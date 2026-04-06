@@ -8,6 +8,20 @@ The bot is intended for personal use and restricts access to a predefined list o
 Each device is mapped by name and MAC address, allowing quick switching between VPN and non-VPN policies
 directly from Telegram.
 
+## Run
+
+Install dependencies:
+
+```bash
+make install_deps
+```
+
+Export the required environment variables, then start the bot:
+
+```bash
+uv run python main.py
+```
+
 ## Environment variables
 
 The bot is configured entirely via environment variables.
@@ -23,9 +37,9 @@ The bot is configured entirely via environment variables.
 | `VPN_POLICY_NAME`    | No       | Name of the VPN-enabled policy to apply.                           | Policy0            |
 | `NO_VPN_POLICY_NAME` | No       | Name of the non-VPN policy to apply.                               | Policy1            |
 
-## Example configuration
+## Example environment
 
-```
+```bash
 BOT_TOKEN=123456:replace-me
 ROUTER_PASSWORD=super-secret-password
 ALLOWED_USER_IDS=1,2
@@ -41,4 +55,3 @@ NO_VPN_POLICY_NAME=Policy1
 - The bot assumes that VPN and non-VPN policies already exist on the router.
 - Device identification is based on MAC address.
 - Access control is enforced strictly via `ALLOWED_USER_IDS`.
-- Designed to be simple, explicit, and safe for unattended use.
