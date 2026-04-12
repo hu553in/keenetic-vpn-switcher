@@ -13,7 +13,7 @@ directly from Telegram.
 Install dependencies:
 
 ```bash
-make install_deps
+make install-deps
 ```
 
 Export the required environment variables, then start the bot:
