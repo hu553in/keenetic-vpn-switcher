@@ -6,18 +6,6 @@ SHELL := /bin/bash
 install-deps:
 	uv sync --frozen --no-install-project
 
-.PHONY: sync-deps
-sync-deps:
-	uv sync
-
-.PHONY: check-deps-updates
-check-deps-updates:
-	uv tree --outdated --depth=1 | grep latest
-
-.PHONY: check-deps-vuln
-check-deps-vuln:
-	uv run pysentry-rs .
-
 .PHONY: lint
 lint:
 	uv run ruff format
