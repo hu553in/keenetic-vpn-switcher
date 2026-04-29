@@ -8,7 +8,7 @@ The bot is intended for personal use and restricts access to a predefined list o
 Each device is mapped by name and MAC address, allowing quick switching between VPN and non-VPN policies
 directly from Telegram.
 
-## Run
+## Quick start
 
 Install dependencies:
 
@@ -26,16 +26,16 @@ uv run python main.py
 
 The bot is configured entirely via environment variables.
 
-| Variable             | Required | Description                                                        | Default            |
-| -------------------- | -------- | ------------------------------------------------------------------ | ------------------ |
-| `BOT_TOKEN`          | Yes      | Telegram bot token.                                                | -                  |
-| `ROUTER_PASSWORD`    | Yes      | Password for the Keenetic router user.                             | -                  |
-| `ALLOWED_USER_IDS`   | Yes      | Comma-separated list of Telegram user IDs allowed to use the bot.  | -                  |
-| `DEVICES_JSON`       | Yes      | JSON array of `[name, mac]` pairs describing controllable devices. | -                  |
-| `ROUTER_URL`         | No       | Base URL of the Keenetic router web interface.                     | http://192.168.1.1 |
-| `ROUTER_USER`        | No       | Router username.                                                   | admin              |
-| `VPN_POLICY_NAME`    | No       | Name of the VPN-enabled policy to apply.                           | Policy0            |
-| `NO_VPN_POLICY_NAME` | No       | Name of the non-VPN policy to apply.                               | Policy1            |
+| Variable             | Required | Default              | Description                                                       |
+| -------------------- | -------- | -------------------- | ----------------------------------------------------------------- |
+| `BOT_TOKEN`          | Yes      | –                    | Telegram bot token                                                |
+| `ROUTER_PASSWORD`    | Yes      | –                    | Password for the Keenetic router user                             |
+| `ALLOWED_USER_IDS`   | Yes      | –                    | Comma-separated list of Telegram user IDs allowed to use the bot  |
+| `DEVICES_JSON`       | Yes      | –                    | JSON array of `[name, mac]` pairs describing controllable devices |
+| `ROUTER_URL`         | No       | `http://192.168.1.1` | Base URL of the Keenetic router web interface                     |
+| `ROUTER_USER`        | No       | `admin`              | Router username                                                   |
+| `VPN_POLICY_NAME`    | No       | `Policy0`            | Name of the VPN-enabled policy to apply                           |
+| `NO_VPN_POLICY_NAME` | No       | `Policy1`            | Name of the non-VPN policy to apply                               |
 
 ## Example environment
 
