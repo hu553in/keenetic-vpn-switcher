@@ -2,9 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.14"
 
-[manifest]
-constraints = [{ name = "urllib3", specifier = ">=2.7.0" }]
-
 [[package]]
 name = "anyio"
 version = "4.11.0"
