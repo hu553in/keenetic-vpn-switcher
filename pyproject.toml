@@ -10,6 +10,9 @@ dependencies = ["requests>=2.33.1", "python-telegram-bot>=22.7"]
 [dependency-groups]
 dev = ["prek>=0.3.13", "pysentry-rs>=0.4.5", "ruff>=0.15.12", "ty>=0.0.35"]
 
+[tool.uv]
+constraint-dependencies = ["urllib3>=2.7.0"]
+
 [tool.ruff]
 target-version = "py314"
 line-length = 100
