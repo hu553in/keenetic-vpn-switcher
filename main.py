@@ -38,6 +38,21 @@ def get_policy(vpn_enabled: bool) -> str:
     return VPN_POLICY if vpn_enabled else NO_VPN_POLICY
 
 
+def parse_device_index(data: str) -> int | None:
+    _prefix, separator, raw_index = data.partition(":")
+    if not separator:
+        return None
+
+    try:
+        device_index = int(raw_index)
+    except ValueError:
+        return None
+
+    if 0 <= device_index < len(DEVICES):
+        return device_index
+    return None
+
+
 def do_post(session: requests.Session, url: str, json: dict | None = None) -> None:
     payload = json or {}
     response = session.post(url, json=payload, timeout=5)
@@ -121,14 +136,13 @@ async def handle_back_callback(query, user_id: int | str, update: Update) -> Non
 
 async def handle_device_callback(query, data: str, user_id: int | str) -> None:
     await query.answer()
-    try:
-        device_index = int(data.split(":", maxsplit=1)[1])
-        name, _mac = DEVICES[device_index]
-    except ValueError, IndexError:
+    device_index = parse_device_index(data)
+    if device_index is None:
         LOGGER.warning("User %s selected unknown device payload %s", user_id, data)
         await query.edit_message_text("❌ Unknown device.")
         return
 
+    name, _mac = DEVICES[device_index]
     LOGGER.info("User %s selected device %s", user_id, name)
     await query.edit_message_text(
         f"🔄 Choose VPN action for {name}:", reply_markup=build_action_keyboard(device_index)
@@ -142,15 +156,14 @@ async def handle_action_callback(query, data: str, user_id: int | str, update: U
         return
 
     _, index_str, action = parts
-    try:
-        device_index = int(index_str)
-        name, _mac = DEVICES[device_index]
-    except ValueError, IndexError:
+    device_index = parse_device_index(f"action:{index_str}")
+    if device_index is None:
         await query.answer()
         LOGGER.warning("User %s triggered action with unknown device payload %s", user_id, data)
         await query.edit_message_text("❌ Unknown device.")
         return
 
+    name, _mac = DEVICES[device_index]
     enable_vpn = action == "on"
     await query.answer("⏳ Applying…", show_alert=False)
     await query.edit_message_text(f"⏳ Turning {'on' if enable_vpn else 'off'} VPN for {name}…")

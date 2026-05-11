@@ -14,7 +14,7 @@ Install dependencies, export the required environment variables, then start the 
 
 ```bash
 make install-deps
-uv run python main.py
+uv run python3 main.py
 ```
 
 ## Environment variables

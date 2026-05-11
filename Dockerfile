@@ -24,4 +24,4 @@ COPY --from=deps --chown=app:app /app/.venv ./.venv
 COPY --chown=app:app pyproject.toml uv.lock main.py config.py ./
 
 USER app
-CMD ["uv", "run", "python", "main.py"]
+CMD ["/app/.venv/bin/python", "main.py"]

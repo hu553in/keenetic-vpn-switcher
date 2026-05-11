@@ -8,7 +8,7 @@ requires-python = ">=3.14"
 dependencies = ["requests>=2.33.1", "python-telegram-bot>=22.7"]
 
 [dependency-groups]
-dev = ["prek>=0.3.13", "pysentry-rs>=0.4.5", "ruff>=0.15.12", "ty>=0.0.35"]
+dev = ["deptry>=0.25.1", "prek>=0.3.13", "pysentry-rs>=0.4.5", "ruff>=0.15.12", "ty>=0.0.35"]
 
 [tool.uv]
 constraint-dependencies = ["urllib3>=2.7.0"]
@@ -34,6 +34,14 @@ fail_on = "low"
 
 [tool.pysentry.sources]
 enabled = ["pypa", "pypi", "osv"]
+
+[tool.deptry]
+known_first_party = ["config", "main"]
+
+[tool.vulture]
+paths = ["config.py", "main.py"]
+min_confidence = 100
+sort_by_size = true
 
 [tool.bandit.assert_used]
 skips = ["*_test.py", "*test_*.py"]
