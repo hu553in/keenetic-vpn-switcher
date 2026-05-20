@@ -5,15 +5,15 @@ description = "Private Telegram bot for toggling VPN policies for selected devic
 readme = "README.md"
 requires-python = ">=3.14"
 
-dependencies = ["requests>=2.34.0", "python-telegram-bot>=22.7"]
+dependencies = ["requests>=2.34.2", "python-telegram-bot>=22.7"]
 
 [dependency-groups]
 dev = [
   "deptry>=0.25.1",
-  "prek>=0.3.13",
+  "prek>=0.4.1",
   "pysentry-rs>=0.4.5",
-  "ruff>=0.15.12",
-  "ty>=0.0.35",
+  "ruff>=0.15.13",
+  "ty>=0.0.38",
 ]
 
 [tool.ruff]
