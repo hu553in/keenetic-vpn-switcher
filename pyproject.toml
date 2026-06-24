@@ -11,9 +11,9 @@ dependencies = ["requests>=2.34.2", "python-telegram-bot>=22.8"]
 dev = [
   "deptry>=0.25.1",
   "prek>=0.4.5",
-  "pysentry-rs>=0.4.6",
-  "ruff>=0.15.17",
-  "ty>=0.0.49",
+  "pysentry-rs>=0.4.7",
+  "ruff>=0.15.19",
+  "ty>=0.0.52",
 ]
 
 [tool.ruff]
