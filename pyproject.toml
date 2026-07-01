@@ -1,7 +1,7 @@
 [project]
 name = "keenetic-vpn-switcher"
 version = "0.1.0"
-description = "Private Telegram bot for toggling VPN policies for selected devices on a Keenetic router."
+description = "Private Telegram bot for switching selected Keenetic devices between VPN and non-VPN policies."
 readme = "README.md"
 requires-python = ">=3.14"
 
