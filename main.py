@@ -69,7 +69,7 @@ def authenticate(session: requests.Session) -> None:
         realm = response.headers["X-NDM-Realm"]
         chall = response.headers["X-NDM-Challenge"]
 
-        md5 = hashlib.md5(f"{USER}:{realm}:{PASSWORD}".encode()).hexdigest()  # nosec B324
+        md5 = hashlib.md5(f"{USER}:{realm}:{PASSWORD}".encode(), usedforsecurity=False).hexdigest()
         sha = hashlib.sha256((chall + md5).encode()).hexdigest()
 
         do_post(session, f"{ROUTER}/auth", {"login": USER, "password": sha})

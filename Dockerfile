@@ -8,7 +8,7 @@ ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
 
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
-  uv sync --frozen --no-dev
+  uv sync --locked --no-dev
 
 FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS runner
 WORKDIR /app
@@ -17,6 +17,12 @@ ENV PYTHONUNBUFFERED=1 \
   PYTHONDONTWRITEBYTECODE=1 \
   UV_PROJECT_ENVIRONMENT=/app/.venv \
   UV_CACHE_DIR=/tmp/uv-cache
+
+# hadolint ignore=DL3005
+RUN --mount=type=cache,target=/var/cache/apt \
+  --mount=type=cache,target=/var/lib/apt/lists \
+  apt-get update && \
+  apt-get upgrade -y --no-install-recommends
 
 RUN useradd -m app
 

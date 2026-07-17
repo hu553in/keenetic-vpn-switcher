@@ -2,38 +2,57 @@
 name = "keenetic-vpn-switcher"
 version = "0.1.0"
 description = "Private Telegram bot for switching selected Keenetic devices between VPN and non-VPN policies."
+authors = [{ name = "Ruslan Khasanshin" }]
 readme = "README.md"
 requires-python = ">=3.14"
 
-dependencies = ["requests>=2.34.2", "python-telegram-bot>=22.8"]
+dependencies = ["python-telegram-bot>=22.8", "requests>=2.34.2"]
+
+[project.urls]
+Repository = "https://github.com/hu553in/keenetic-vpn-switcher"
 
 [dependency-groups]
 dev = [
+  "bandit>=1.9.4",
   "deptry>=0.25.1",
   "prek>=0.4.8",
   "pysentry-rs>=0.4.7",
   "ruff>=0.15.20",
   "ty>=0.0.56",
+  "vulture>=2.16",
 ]
 
 [tool.uv]
-default-groups = ["dev"]
 link-mode = "copy"
 
 [tool.ruff]
 target-version = "py314"
 line-length = 100
-extend-exclude = [".venv"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM", "ARG", "PL", "RUF", "C4", "FA", "N", "PERF", "W"]
+select = [
+  "E",
+  "F",
+  "I",
+  "UP",
+  "B",
+  "SIM",
+  "ARG",
+  "PL",
+  "RUF",
+  "C4",
+  "FA",
+  "N",
+  "PERF",
+  "W",
+  "PGH004",
+  "T10",
+]
 
 [tool.ruff.lint.isort]
 split-on-trailing-comma = false
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
 skip-magic-trailing-comma = true
 
 [tool.pysentry.defaults]
@@ -49,6 +68,3 @@ known_first_party = ["config", "main"]
 paths = ["config.py", "main.py"]
 min_confidence = 100
 sort_by_size = true
-
-[tool.bandit.assert_used]
-skips = ["*_test.py", "*test_*.py"]

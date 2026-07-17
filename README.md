@@ -15,6 +15,7 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 
 - Python 3.14+
 - `uv`
+- Bun for repository tooling
 - Telegram bot token
 - Keenetic router credentials
 - Existing Keenetic policies for VPN and non-VPN routing
@@ -26,6 +27,7 @@ Local checkout:
 
 ```bash
 make install-deps
+make ensure-env
 ```
 
 Docker image:
@@ -33,6 +35,9 @@ Docker image:
 ```bash
 docker build -t keenetic-vpn-switcher .
 ```
+
+CI publishes `ghcr.io/hu553in/keenetic-vpn-switcher`; `latest` follows `main`, while `sha-*` tags
+are immutable.
 
 ## Configuration
 
@@ -47,14 +52,7 @@ docker build -t keenetic-vpn-switcher .
 | `VPN_POLICY_NAME`    | No       | `Policy0`            | Policy applied when VPN is enabled  |
 | `NO_VPN_POLICY_NAME` | No       | `Policy1`            | Policy applied when VPN is disabled |
 
-Example `.env`:
-
-```env
-BOT_TOKEN=123456:replace-me
-ROUTER_PASSWORD=super-secret-password
-ALLOWED_USER_IDS=1,2
-DEVICES_JSON='[["laptop","00:00:00:00:00:00"],["phone","00:00:00:00:00:00"]]'
-```
+Edit the generated `.env`; `.env.example` contains every supported variable and its default.
 
 ## Usage
 
@@ -83,12 +81,19 @@ Open `/start` in Telegram, choose a device, then choose the VPN action.
 
 ```bash
 make install-deps
+uv run prek install
 make check
+make check-fix
 ```
 
 Focused checks:
 
 ```bash
 make lint
+make lint-fix
 make check-types
+make check-deps
+make check-vulns
+make check-unused
+make check-security
 ```
