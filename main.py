@@ -180,8 +180,7 @@ async def handle_action_callback(query, data: str, user_id: int | str, update: U
         return
 
     LOGGER.info("Applied policy for %s (user=%s, action=%s)", name, user_id, action)
-    await query.edit_message_text(result)
-    await edit_or_reply_device_menu(update)
+    await edit_or_reply_device_menu(update, f"{result}\n\n🔄 Select a device:")
 
 
 async def handle_start(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
