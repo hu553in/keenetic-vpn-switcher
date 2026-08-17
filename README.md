@@ -13,7 +13,7 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 
 ## Requirements
 
-- Python 3.14+
+- Python
 - `uv`
 - Bun for repository tooling
 - Telegram bot token
