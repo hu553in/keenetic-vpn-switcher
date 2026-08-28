@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS deps
+FROM ghcr.io/astral-sh/uv:python3.14-trixie-slim AS deps
 WORKDIR /app
 
 ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
@@ -10,7 +10,7 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --locked --no-dev
 
-FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS runner
+FROM ghcr.io/astral-sh/uv:python3.14-trixie-slim AS runner
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1 \

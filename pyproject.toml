@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Private Telegram bot for switching selected Keenetic devices between VPN and non-VPN policies."
 authors = [{ name = "Ruslan Khasanshin" }]
 readme = "README.md"
-requires-python = ">=3.14.7"
+requires-python = ">=3.14"
 
 dependencies = ["python-telegram-bot>=22.8", "requests>=2.34.2"]
 
