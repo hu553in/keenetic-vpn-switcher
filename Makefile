@@ -50,6 +50,10 @@ check-unused:
 check-security:
 	git ls-files --cached --others --exclude-standard -z -- '*.py' | xargs -0 uv run bandit -c pyproject.toml
 
+.PHONY: check-config
+check-config:
+	env -i PATH="$$PATH" HOME="$$HOME" uv run --locked --env-file .env.example python -c 'import config'
+
 .PHONY: check-renovate
 check-renovate:
 	bunx --package renovate renovate-config-validator --strict --no-global renovate.json
@@ -63,7 +67,7 @@ check-workflows:
 	$(ACTIONLINT)
 
 .PHONY: check
-check: lint check-hooks check-types check-deps check-vulns check-unused check-security check-renovate check-workflows
+check: lint check-hooks check-types check-deps check-vulns check-unused check-security check-config check-renovate check-workflows
 
 .PHONY: check-fix
 check-fix: lint-fix

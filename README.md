@@ -64,6 +64,9 @@ uv run --env-file .env python3 main.py
 
 Docker:
 
+In `.env`, remove the outer single quotes from `DEVICES_JSON`, keeping the JSON double quotes.
+`docker run --env-file` passes values literally; the local `uv` command needs the outer quotes.
+
 ```bash
 docker run --rm --env-file .env keenetic-vpn-switcher
 ```
@@ -96,4 +99,5 @@ make check-deps
 make check-vulns
 make check-unused
 make check-security
+make check-config
 ```
