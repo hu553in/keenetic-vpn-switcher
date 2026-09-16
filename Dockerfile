@@ -18,8 +18,8 @@ ENV PYTHONUNBUFFERED=1 \
   UV_PROJECT_ENVIRONMENT=/app/.venv \
   UV_CACHE_DIR=/tmp/uv-cache
 
-RUN --mount=type=cache,target=/var/cache/apt \
-  --mount=type=cache,target=/var/lib/apt/lists \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
   apt-get update && \
   apt-get upgrade -y --no-install-recommends
 
