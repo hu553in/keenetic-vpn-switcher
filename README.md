@@ -15,7 +15,7 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 
 - Python
 - `uv`
-- Bun for repository tooling
+- Make and Bun for repository tooling
 - Telegram bot token
 - Keenetic router credentials
 - Existing Keenetic policies for VPN and non-VPN routing
@@ -23,21 +23,27 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 
 ## Setup
 
-Local checkout:
+Local setup:
 
 ```bash
 make install-deps
 make ensure-env
 ```
 
-Docker image:
+Published image:
+
+```bash
+docker pull ghcr.io/hu553in/keenetic-vpn-switcher:latest
+```
+
+`latest` follows `main`; `sha-*` tags identify commits. Pin
+`ghcr.io/hu553in/keenetic-vpn-switcher@sha256:<digest>` for an immutable deployment.
+
+Local image:
 
 ```bash
 docker build -t keenetic-vpn-switcher .
 ```
-
-CI publishes `ghcr.io/hu553in/keenetic-vpn-switcher`; `latest` follows `main`, while `sha-*` tags
-are immutable.
 
 ## Configuration
 
@@ -56,10 +62,10 @@ Edit the generated `.env`; `.env.example` contains every supported variable and 
 
 ## Usage
 
-Local:
+Run from a checkout:
 
 ```bash
-uv run --env-file .env python3 main.py
+uv run --locked --env-file .env python3 main.py
 ```
 
 Docker:
@@ -68,23 +74,18 @@ In `.env`, remove the outer single quotes from `DEVICES_JSON`, keeping the JSON 
 `docker run --env-file` passes values literally; the local `uv` command needs the outer quotes.
 
 ```bash
-docker run --rm --env-file .env keenetic-vpn-switcher
+docker run --rm --env-file .env ghcr.io/hu553in/keenetic-vpn-switcher:latest
 ```
 
+Replace the published image name with `keenetic-vpn-switcher` to run the local image.
+
 Open `/start` in Telegram, choose a device, then choose the VPN action.
-
-## Runtime behavior
-
-- The bot calls the Keenetic web API at `ROUTER_URL`
-- Devices are matched by MAC address
-- Access control is enforced before callbacks and messages are handled
-- The router configuration is saved after policy changes
 
 ## Development
 
 ```bash
 make install-deps
-uv run prek install
+uv run --locked prek install
 make check
 make check-fix
 ```
@@ -94,10 +95,13 @@ Focused checks:
 ```bash
 make lint
 make lint-fix
+make check-hooks
 make check-types
 make check-deps
 make check-vulns
 make check-unused
 make check-security
 make check-config
+make check-renovate
+make check-workflows
 ```

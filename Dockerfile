@@ -1,27 +1,27 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/astral-sh/uv:python3.14-trixie-slim AS deps
+FROM python:3.15-slim-trixie AS deps
+COPY --from=ghcr.io/astral-sh/uv:0.13.0 /uv /uvx /bin/
 WORKDIR /app
 
-ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
-  UV_CACHE_DIR=/root/.cache/uv
+ENV UV_CACHE_DIR=/root/.cache/uv \
+  UV_PROJECT_ENVIRONMENT=/app/.venv \
+  UV_PYTHON_DOWNLOADS=0
 
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --locked --no-dev
 
-FROM ghcr.io/astral-sh/uv:python3.14-trixie-slim AS runner
+FROM python:3.15-slim-trixie AS runner
 WORKDIR /app
 
-ENV PYTHONUNBUFFERED=1 \
-  PYTHONDONTWRITEBYTECODE=1 \
-  UV_PROJECT_ENVIRONMENT=/app/.venv \
-  UV_CACHE_DIR=/tmp/uv-cache
+ENV PYTHONDONTWRITEBYTECODE=1 \
+  PYTHONUNBUFFERED=1
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-  apt-get update && \
-  apt-get upgrade -y --no-install-recommends
+  apt-get update \
+  && apt-get upgrade -y --no-install-recommends
 
 # Runtime dependencies come from the built virtualenv; pip is unused.
 RUN python -m pip uninstall --yes pip \
