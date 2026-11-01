@@ -23,7 +23,6 @@ jobs:
     uses: hu553in/common-things/.github/workflows/check-docker.yml@main
     with:
       no_cache_filters: runner
-      build: ${{ github.ref != 'refs/heads/main' }}
       smoke_command: &python_smoke |
         /app/.venv/bin/python --version
         /app/.venv/bin/python -c 'import telegram, requests'
