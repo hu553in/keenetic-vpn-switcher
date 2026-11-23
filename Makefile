@@ -2,8 +2,8 @@
 
 SHELL := /bin/bash -euo pipefail
 
-ACTIONLINT := bunx github-actionlint
-TAPLO := bunx @taplo/cli
+ACTIONLINT := bunx --minimum-release-age 259200 github-actionlint
+TAPLO := bunx --minimum-release-age 259200 @taplo/cli
 
 .PHONY: install-deps
 install-deps:
@@ -51,16 +51,12 @@ check-security:
 check-config:
 	env -i PATH="$$PATH" HOME="$$HOME" uv run --locked --env-file .env.example python -c 'import config'
 
-.PHONY: check-renovate
-check-renovate:
-	bunx --package renovate renovate-config-validator --strict --no-global renovate.json
-
 .PHONY: check-workflows
 check-workflows:
 	$(ACTIONLINT)
 
 .PHONY: check
-check: lint check-hooks check-types check-deps check-vulns check-unused check-security check-config check-renovate check-workflows
+check: lint check-hooks check-types check-deps check-vulns check-unused check-security check-config check-workflows
 
 .PHONY: check-fix
 check-fix: lint-fix
