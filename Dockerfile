@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM python:3.15-slim-trixie AS deps
-COPY --from=ghcr.io/astral-sh/uv:0.13.9 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.13.9 /uv /bin/
 WORKDIR /app
 
 ENV UV_CACHE_DIR=/root/.cache/uv \
@@ -28,7 +28,7 @@ RUN python -m pip uninstall --yes pip \
   && useradd -m app
 
 COPY --from=deps --chown=app:app /app/.venv ./.venv
-COPY --chown=app:app pyproject.toml uv.lock main.py config.py ./
+COPY --chown=app:app main.py config.py ./
 
 USER app
 CMD ["/app/.venv/bin/python", "main.py"]

@@ -3,7 +3,6 @@
 SHELL := /bin/bash -euo pipefail
 
 ACTIONLINT := bunx --minimum-release-age 259200 github-actionlint
-TAPLO := bunx --minimum-release-age 259200 @taplo/cli
 
 .PHONY: install-deps
 install-deps:
@@ -12,20 +11,18 @@ install-deps:
 .PHONY: lint
 lint:
 	bun fmt --check
-	$(TAPLO) fmt --check
 	uv run --locked ruff check
 	uv run --locked ruff format --check
 
 .PHONY: lint-fix
 lint-fix:
 	bun fmt
-	$(TAPLO) fmt
 	uv run --locked ruff check --fix
 	uv run --locked ruff format
 
 .PHONY: check-hooks
 check-hooks:
-	uv run --locked prek validate-config prek.toml
+	bunx --minimum-release-age 259200 lefthook validate
 
 .PHONY: check-types
 check-types:
@@ -49,7 +46,7 @@ check-security:
 
 .PHONY: check-config
 check-config:
-	env -i PATH="$$PATH" HOME="$$HOME" uv run --locked --env-file .env.example python -c 'import config'
+	env -i PATH="$$PATH" HOME="$$HOME" uv run --locked --no-dev --env-file .env.example python -c 'import config'
 
 .PHONY: check-workflows
 check-workflows:
@@ -64,4 +61,4 @@ check-fix: lint-fix
 
 .PHONY: ensure-env
 ensure-env:
-	if [ ! -f .env ]; then cp .env.example .env; fi
+	if [ ! -e .env ] && [ ! -L .env ]; then (umask 077 && cp .env.example .env); fi

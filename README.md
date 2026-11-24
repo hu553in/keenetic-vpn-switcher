@@ -13,7 +13,7 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 
 ## Requirements
 
-- Python
+- Python 3.15 or newer
 - `uv`
 - Make and Bun for repository tooling
 - Telegram bot token
@@ -26,7 +26,6 @@ Private Telegram bot for switching selected Keenetic devices between VPN and non
 Local setup:
 
 ```bash
-make install-deps
 make ensure-env
 ```
 
@@ -38,6 +37,9 @@ docker pull ghcr.io/hu553in/keenetic-vpn-switcher:latest
 
 `latest` follows `main`; `sha-*` tags identify commits. Pin
 `ghcr.io/hu553in/keenetic-vpn-switcher@sha256:<digest>` for an immutable deployment.
+
+Manual CI runs check the image by default. To publish manually, run CI on `main` with `publish`
+enabled.
 
 Local image:
 
@@ -65,7 +67,7 @@ Edit the generated `.env`; `.env.example` contains every supported variable and 
 Run from a checkout:
 
 ```bash
-uv run --locked --env-file .env python3 main.py
+uv run --locked --no-dev --env-file .env python3 main.py
 ```
 
 Docker:
@@ -84,11 +86,11 @@ Open `/start` in Telegram, choose a device, then choose the VPN action.
 ## Development
 
 ```bash
-make install-deps
-uv run --locked prek install
+bunx lefthook install
 make check
-make check-fix
 ```
+
+Run `make check-fix` to apply automatic fixes and then run the checks.
 
 Focused checks:
 
